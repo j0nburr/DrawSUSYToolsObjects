@@ -61,7 +61,6 @@ StatusCode DrawSUSYToolsObjectsAlg::initialize() {
 
   ATH_CHECK(m_objTool.retrieve() );
 
-  ATH_CHECK( book( TH1F("h_met", ";E_{T}^{miss} [GeV]", 400, 0, 400) ) );
   ATH_CHECK( book( TH1F("h_elePt", ";Electron p_{T} [GeV]", 200, 0, 200) ) );
   ATH_CHECK( book( TH1F("h_muPt", ";Muon p_{T} [GeV]", 200, 0, 200) ) );
   ATH_CHECK( book( TH1F("h_jetPt", ";Jet p_{T} [GeV]", 400, 0, 400) ) );
