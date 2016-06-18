@@ -61,6 +61,7 @@ StatusCode DrawSUSYToolsObjectsAlg::initialize() {
 
   ATH_CHECK(m_objTool.retrieve() );
 
+  ATH_CHECK( book( TH1F("h_met", ";E_{T}^{miss} [GeV]", 400, 0, 400) ) );
   ATH_CHECK( book( TH1F("h_elePt", ";Electron p_{T} [GeV]", 200, 0, 200) ) );
   ATH_CHECK( book( TH1F("h_muPt", ";Muon p_{T} [GeV]", 200, 0, 200) ) );
   ATH_CHECK( book( TH1F("h_jetPt", ";Jet p_{T} [GeV]", 400, 0, 400) ) );
@@ -133,6 +134,9 @@ StatusCode DrawSUSYToolsObjectsAlg::execute() {
 
   TH1* theHist(0);
   static SG::AuxElement::ConstAccessor<char> cacc_passOR("passOR");
+
+  ATH_CHECK( getHist("h_met", theHist) );
+  theHist->Fill( (*met)["FinalTrk"]->met() );
 
   ATH_CHECK( getHist("h_elePt", theHist) );
   for (auto iele : *electrons) if (cacc_passOR(*iele) ) theHist->Fill(iele->pt() * 0.001, eventWeight);
