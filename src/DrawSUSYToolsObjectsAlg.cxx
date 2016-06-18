@@ -96,6 +96,8 @@ StatusCode DrawSUSYToolsObjectsAlg::execute() {
   ATH_MSG_DEBUG ("Executing " << name() << "...");
   setFilterPassed(false); //optional: start with algorithm not passed
 
+  if( !m_objTool->GetPrimVtx() ) return StatusCode::SUCCESS;
+
   xAOD::JetContainer* jets(0);
   xAOD::ShallowAuxContainer* jetsAux(0);
   ATH_CHECK( m_objTool->GetJets(jets, jetsAux, true) );
@@ -135,7 +137,7 @@ StatusCode DrawSUSYToolsObjectsAlg::execute() {
   static SG::AuxElement::ConstAccessor<char> cacc_passOR("passOR");
 
   ATH_CHECK( getHist("h_met", theHist) );
-  theHist->Fill( (*met)["FinalTrk"]->met() );
+  theHist->Fill( (*met)["Final"]->met() );
 
   ATH_CHECK( getHist("h_elePt", theHist) );
   for (auto iele : *electrons) if (cacc_passOR(*iele) ) theHist->Fill(iele->pt() * 0.001, eventWeight);
